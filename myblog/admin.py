@@ -8,5 +8,5 @@ admin.site.register(Post, PostAdmin)
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    exclude = ('posts',)
 admin.site.register(Category, CategoryAdmin)

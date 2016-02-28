@@ -3,16 +3,17 @@ from myblog.models import Post, Category
 
 
 class CategoryInline(admin.TabularInline):
-    model = Category
+    model = Category.posts.through
 
 
 class PostAdmin(admin.ModelAdmin):
     inlines = [
         CategoryInline
     ]
-admin.site.register(Post, PostAdmin)
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    exclude = ('posts',)
+    fields = ('name', 'description')
+
+admin.site.register(Post, PostAdmin)
 admin.site.register(Category, CategoryAdmin)

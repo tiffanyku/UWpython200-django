@@ -2,8 +2,14 @@ from django.contrib import admin
 from myblog.models import Post, Category
 
 
+class CategoryInline(admin.TabularInline):
+    model = Category
+
+
 class PostAdmin(admin.ModelAdmin):
-    pass
+    inlines = [
+        CategoryInline
+    ]
 admin.site.register(Post, PostAdmin)
 
 

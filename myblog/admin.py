@@ -1,24 +1,33 @@
+import datetime
 from django.contrib import admin
 from myblog.models import Post, Category
+from django.core.urlresolvers import reverse
 
 
 class CategoryInline(admin.TabularInline):
     model = Category.posts.through
 
 
+def make_published(modeladmin, request, queryset):
+    now = datetime.datetime.now()
+    queryset.update(published_date=now)
+make_published.short_description = "Set publication date for selected posts."
+
+
 class PostAdmin(admin.ModelAdmin):
     inlines = [CategoryInline]
-    list_display = ('title', 'author', 'created_date', 'modified_date')
+    list_display = ('title', 'author_for_admin', 'created_date', 'modified_date')
+    readonly_fields = ('created_date', 'modified_date')
     actions = ['make_published']
 
-    def make_published(self, request, queryset):
-        rows_updated = queryset.update(status='p')
-        if rows_updated == 1:
-            message_bit = "1 post was"
-        else:
-            message_bit = "{} posts were".format(rows_updated)
-        self.message_user(request, "{} successfully marked as published.".format(message_bit))
-    make_published.short_description = "Mark selected posts as published."
+    def author_for_admin(self, obj):
+        author = obj.author
+        url = reverse('admin:auth_user_change', args=(author.pk))
+        name = author.get_full_name() or author.username
+        link = '<a href="{}">{}</a>'.format(url, name)
+        return link
+    author_for_admin.short_description = 'Author'
+    author_for_admin.allow_tags = True
 
 
 class CategoryAdmin(admin.ModelAdmin):

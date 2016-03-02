@@ -31,4 +31,5 @@ urlpatterns = [
         {'next_page': '/'},
         name="logout"),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]

@@ -1,4 +1,4 @@
-from settings import *
+from mysettings import *
 
 DEBUG = False
 TEMPLATE_DEBUG = False

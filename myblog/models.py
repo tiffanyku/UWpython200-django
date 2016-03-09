@@ -5,7 +5,7 @@ from ckeditor.fields import RichTextField
 
 class Post(models.Model):
     title = models.CharField(max_length=128)
-    text = RichTextField(blank=True, config_name='awesome_ckeditor')
+    text = RichTextField(blank=True)
     author = models.ForeignKey(User)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)

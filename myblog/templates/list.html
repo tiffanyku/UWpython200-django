@@ -10,11 +10,13 @@
       Posted by {{ post.author_for_admin }} &mdash; {{ post.published_date }}
     </p>
     <div class="post-body">
-      {{ post.text }}
+      {% with preview=post.text|safe %}
+      {{ preview|truncatechars_html:150 }}
+      {% endwith %}
     </div>
-    <ul class="categories">
+    <ul class="categories"><strong>Tags:</strong>
       {% for category in post.categories.all %}
-        <li>{{ category }}; </li>
+        <li>{{ category }}, </li>
       {% endfor %}
     </ul>
   </div>

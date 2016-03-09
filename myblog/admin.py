@@ -18,11 +18,11 @@ class PostAdmin(admin.ModelAdmin):
     inlines = [CategoryInline]
     list_display = ('title', 'author_for_admin', 'created_date', 'modified_date')
     readonly_fields = ('created_date', 'modified_date')
-    actions = ['make_published']
+    actions = ['make_published', ]
 
     def author_for_admin(self, obj):
         author = obj.author
-        url = reverse('admin:auth_user_change', args=(author.pk))
+        url = reverse('admin:auth_user_change', args=(author.pk,))
         name = author.get_full_name() or author.username
         link = '<a href="{}">{}</a>'.format(url, name)
         return link

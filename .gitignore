@@ -1,5 +1,7 @@
 */.pyc
 */.DS_Store
+*/*.pyc
+*/.DS_Store
 *.db
 static/
 db.sqlite3
